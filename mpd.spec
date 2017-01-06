@@ -16,22 +16,22 @@
 
 Name:           mpd
 Epoch:          1
-Version:        0.19.17
-Release:        3%{?dist}
+Version:        0.20
+Release:        1%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
 URL:            http://www.musicpd.org/
 
-Source0:        http://www.musicpd.org/download/mpd/0.19/mpd-%{version}.tar.xz
-Source1:        http://www.musicpd.org/download/mpd/0.19/mpd-%{version}.tar.xz.sig
+Source0:        http://www.musicpd.org/download/mpd/0.20/mpd-%{version}.tar.xz
+Source1:        http://www.musicpd.org/download/mpd/0.20/mpd-%{version}.tar.xz.sig
 # Note that the 0.18.x branch doesn't yet work with Fedora's version of
 # libmpcdec which needs updating.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1014468
 # http://bugs.musicpd.org/view.php?id=3814#bugnotes
-Source2:        mpd.logrotate
-Source3:        mpd.tmpfiles.d
-Patch0:         mpd-0.18-mpdconf.patch
+Source2:        https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd.logrotate
+Source3:        https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd.tmpfiles.d
+Patch0:         https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd-0.18-mpdconf.patch
 
 BuildRequires:     alsa-lib-devel
 BuildRequires:     audiofile-devel
@@ -180,6 +180,9 @@ fi
 
 
 %changelog
+* Fri Jan 06 2017 Pavlo Rudyi <paulcarroty at riseup.net> 1:0.20-1
+- Updated to new release
+
 * Sat Jul 30 2016 Julian Sikorski <belegdol@fedoraproject.org> - 1:0.19.17-3
 - Rebuilt for ffmpeg-3.1.1
 
