@@ -158,7 +158,7 @@ fi
 
 
 %files
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING 
 %{_bindir}/%{name}
 %{_mandir}/man1/mpd.1*
 %{_mandir}/man5/mpd.conf.5*
