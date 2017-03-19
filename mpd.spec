@@ -17,7 +17,7 @@
 Name:           mpd
 Epoch:          1
 Version:        0.20
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
@@ -180,6 +180,10 @@ fi
 
 
 %changelog
+
+* Sat Mar 18 2017 David Vásquez <davidjeremias82 AT gmail DOT com> - 1:0.20-2
+- Rebuilt for libbluray
+
 * Fri Jan 06 2017 Pavlo Rudyi <paulcarroty at riseup.net> 1:0.20-1
 - Updated to new release
 
