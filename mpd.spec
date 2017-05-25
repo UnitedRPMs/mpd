@@ -13,25 +13,26 @@
 %global  mpd_dbfile          %{mpd_homedir}/mpd.db
 %global  mpd_logfile         %{mpd_logdir}/mpd.log
 %global  mpd_statefile       %{mpd_homedir}/mpdstate
+%global  bversion            0.20
 
 Name:           mpd
 Epoch:          1
-Version:        0.20
-Release:        3%{?dist}
+Version:        0.20.8
+Release:        1%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
 URL:            http://www.musicpd.org/
 
-Source0:        http://www.musicpd.org/download/mpd/0.20/mpd-%{version}.tar.xz
-Source1:        http://www.musicpd.org/download/mpd/0.20/mpd-%{version}.tar.xz.sig
+Source0:        http://www.musicpd.org/download/mpd/%{bversion}/mpd-%{version}.tar.xz
+Source1:        http://www.musicpd.org/download/mpd/%{bversion}/mpd-%{version}.tar.xz.sig
 # Note that the 0.18.x branch doesn't yet work with Fedora's version of
 # libmpcdec which needs updating.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1014468
 # http://bugs.musicpd.org/view.php?id=3814#bugnotes
-Source2:        https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd.logrotate
-Source3:        https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd.tmpfiles.d
-Patch0:         https://raw.githubusercontent.com/UnitedRPMs/mpd/master/mpd-0.18-mpdconf.patch
+Source2:        mpd.logrotate
+Source3:        mpd.tmpfiles.d
+Patch0:         mpd-0.18-mpdconf.patch
 
 BuildRequires:     alsa-lib-devel
 BuildRequires:     audiofile-devel
@@ -180,6 +181,9 @@ fi
 
 
 %changelog
+
+* Wed May 24 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.8-1  
+- Updated to 0.20.8-1
 
 * Wed Apr 19 2017 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20-3  
 - Automatic Mass Rebuild
