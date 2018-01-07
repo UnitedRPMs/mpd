@@ -17,7 +17,7 @@
 
 Name:           mpd
 Epoch:          1
-Version:        0.20.14
+Version:        0.20.15
 Release:        2%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
@@ -181,6 +181,9 @@ fi
 
 
 %changelog
+
+* Sun Jan 07 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.15-2  
+- Updated to 0.20.15
 
 * Wed Jan 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.14-2  
 - Updated to 0.20.14
