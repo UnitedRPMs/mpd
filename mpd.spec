@@ -182,7 +182,7 @@ fi
 
 %changelog
 
-* Thu May 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.19-1
+* Thu May 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.19-2
 - Updated to 0.20.19
 
 * Thu Apr 26 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.18-3  
