@@ -18,7 +18,7 @@
 Name:           mpd
 Epoch:          1
 Version:        0.20.20
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
@@ -71,6 +71,21 @@ BuildRequires:     yajl-devel
 BuildRequires:     zlib-devel
 BuildRequires:     zziplib-devel
 BuildRequires:     libsidplayfp-devel
+BuildRequires:     adplug-devel
+BuildRequires:     avahi-compat-libdns_sd-devel
+BuildRequires:     avahi-devel
+BuildRequires:     dbus-devel
+BuildRequires:     expat-devel
+BuildRequires:     fluidsynth-devel
+BuildRequires:     libmpdclient-devel
+BuildRequires:     libnfs-devel
+BuildRequires:     libsmbclient-devel
+BuildRequires:     libsndfile-devel
+BuildRequires:     libupnp-devel
+BuildRequires:     mpg123-devel
+BuildRequires:     openal-soft-devel
+BuildRequires:     twolame-devel
+BuildRequires:     wildmidi-devel
 
 Requires(pre):     shadow-utils
 Requires(post):    systemd
@@ -181,6 +196,9 @@ fi
 
 
 %changelog
+
+* Tue May 22 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.20-3
+- Support for various enconders, decoders, storage and others
 
 * Tue May 22 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.20-2
 - Updated to 0.20.20
