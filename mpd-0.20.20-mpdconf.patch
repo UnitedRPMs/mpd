@@ -1,0 +1,24 @@
+diff -ruN orig/doc/mpdconf.example new/doc/mpdconf.example
+--- orig/doc/mpdconf.example	2017-02-01 14:58:30.000000000 -0600
++++ new/doc/mpdconf.example	2018-07-20 13:34:24.762457315 -0600
+@@ -82,7 +82,7 @@
+ #bind_to_address		"any"
+ #
+ # And for Unix Socket
+-#bind_to_address		"~/.mpd/socket"
++#bind_to_address		"/run/mpd/socket"
+ #
+ # This setting is the TCP port that is desired for the daemon to get assigned
+ # to.
+@@ -392,3 +392,11 @@
+ #filesystem_charset		"UTF-8"
+ #
+ ###############################################################################
++
++audio_output {
++        type          "alsa"
++        name          "Default ALSA Output"
++        # Optional
++        device        "sysdefault:CARD=PCH"
++        #mixer_control "PCM"
++}

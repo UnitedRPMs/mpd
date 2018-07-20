@@ -32,7 +32,7 @@ Source1:        http://www.musicpd.org/download/mpd/%{bversion}/mpd-%{version}.t
 # http://bugs.musicpd.org/view.php?id=3814#bugnotes
 Source2:        mpd.logrotate
 Source3:        mpd.tmpfiles.d
-Patch0:         mpd-0.18-mpdconf.patch
+Patch0:         mpd-0.20.20-mpdconf.patch
 
 BuildRequires:     alsa-lib-devel
 BuildRequires:     audiofile-devel
@@ -86,6 +86,7 @@ BuildRequires:     mpg123-devel
 BuildRequires:     openal-soft-devel
 BuildRequires:     twolame-devel
 BuildRequires:     wildmidi-devel
+BuildRequires:     freetype-devel
 
 Requires(pre):     shadow-utils
 Requires(post):    systemd
@@ -103,8 +104,7 @@ browsing and playing your MPD music collection.
 
 
 %prep
-%setup -q -n %{name}-%{version}
-%patch0 -p0
+%autosetup -n %{name}-%{version} -p1
 # There is no libsystemd-daemon in F25
 sed -i -e 's@libsystemd-daemon@libsystemd@g' configure.ac
 
@@ -150,9 +150,6 @@ sed -i -e "s|#music_directory.*$|music_directory \"%{mpd_musicdir}\"|g" \
        -e 's|#user.*$|user "mpd"|g' \
        $RPM_BUILD_ROOT%{mpd_configfile}
 
-rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}/
-
-
 %pre
 if [ $1 -eq 1 ]; then
     getent group %{mpd_group} >/dev/null || groupadd -r %{mpd_group}
@@ -175,6 +172,9 @@ fi
 
 %files
 %doc AUTHORS COPYING 
+%{_docdir}/mpd/NEWS
+%{_docdir}/mpd/README.md
+%{_docdir}/mpd/mpdconf.example
 %{_bindir}/%{name}
 %{_mandir}/man1/mpd.1*
 %{_mandir}/man5/mpd.conf.5*
