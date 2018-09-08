@@ -52,6 +52,7 @@ BuildRequires:     libid3tag-devel
 BuildRequires:     libmad-devel
 BuildRequires:     libmms-devel
 BuildRequires:     libmodplug-devel
+BuildRequires:     gcc-c++
 
 # Need new version with SV8
 # BuildRequires:     libmpcdec-devel
