@@ -177,6 +177,7 @@ fi
 %{_docdir}/mpd/README.md
 %{_docdir}/mpd/mpdconf.example
 %{_bindir}/%{name}
+%{_datadir}/icons/hicolor/scalable/apps/mpd.svg
 %{_mandir}/man1/mpd.1*
 %{_mandir}/man5/mpd.conf.5*
 %{_unitdir}/mpd.service
