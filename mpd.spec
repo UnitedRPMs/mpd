@@ -13,11 +13,11 @@
 %global  mpd_dbfile          %{mpd_homedir}/mpd.db
 %global  mpd_logfile         %{mpd_logdir}/mpd.log
 %global  mpd_statefile       %{mpd_homedir}/mpdstate
-%global  bversion            0.20
+%global  bversion            0.21
 
 Name:           mpd
 Epoch:          1
-Version:        0.20.23
+Version:        0.21
 Release:        2%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
@@ -198,6 +198,9 @@ fi
 
 
 %changelog
+
+* Sat Nov 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21-2
+- Updated to 0.21
 
 * Wed Oct 31 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.23-2
 - Updated to 0.20.23
