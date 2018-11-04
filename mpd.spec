@@ -1,4 +1,5 @@
 %global  _hardened_build     1
+%global _userunitdir /usr/lib/systemd/user/
 
 %global  mpd_user            mpd
 %global  mpd_group           %{mpd_user}
@@ -15,6 +16,11 @@
 %global  mpd_statefile       %{mpd_homedir}/mpdstate
 %global  bversion            0.21
 
+
+%global commit0 528f5b9cb94821e9b5e575b8ce99440bbbfc38ad
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global gver .git%{shortcommit0}
+
 Name:           mpd
 Epoch:          1
 Version:        0.21
@@ -24,8 +30,7 @@ License:        GPLv2+
 Group:          Applications/Multimedia
 URL:            http://www.musicpd.org/
 
-Source0:        http://www.musicpd.org/download/mpd/%{bversion}/mpd-%{version}.tar.xz
-Source1:        http://www.musicpd.org/download/mpd/%{bversion}/mpd-%{version}.tar.xz.sig
+Source0:        https://github.com/MusicPlayerDaemon/MPD/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 # Note that the 0.18.x branch doesn't yet work with Fedora's version of
 # libmpcdec which needs updating.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1014468
@@ -52,7 +57,11 @@ BuildRequires:     libid3tag-devel
 BuildRequires:     libmad-devel
 BuildRequires:     libmms-devel
 BuildRequires:     libmodplug-devel
-BuildRequires:     gcc-c++
+BuildRequires:     libgcrypt-devel
+BuildRequires:     meson
+BuildRequires:     ninja-build
+BuildRequires:     clang
+BuildRequires:     python3-sphinx
 
 # Need new version with SV8
 # BuildRequires:     libmpcdec-devel
@@ -105,51 +114,65 @@ browsing and playing your MPD music collection.
 
 
 %prep
-%autosetup -n %{name}-%{version} -p1
-# There is no libsystemd-daemon in F25
-sed -i -e 's@libsystemd-daemon@libsystemd@g' configure.ac
-
+%autosetup -n MPD-%{commit0} -p1
+mkdir -p build
+ 
 %build
-./autogen.sh
-%{configure} \
-    --with-systemdsystemunitdir=%{_unitdir} \
-    --enable-bzip2 \
-    --enable-soundcloud \
-    --enable-mikmod \
-    --enable-pipe-output \
-    --disable-mpc \
-    --enable-systemd-daemon \
-    --enable-zzip \
-    --enable-soxr
-make %{?_smp_mflags}
+pushd build
+export CC=clang
+export CXX=clang++
+
+_opts=('-Ddocumentation=true'
+	       '-Dchromaprint=disabled' # appears not to be used for anything
+	       '-Dsidplay=disabled' # unclear why but disabled in the past
+	       '-Dlibwrap=disabled' # twentieth century's over
+	       '-Dadplug=disabled' # not in an official repo
+	       '-Dsndio=disabled' # interferes with detection of alsa devices
+	       '-Dshine=disabled' # not in an official repo
+               '-Dffmpeg=enabled' # We need test if ffmpeg4 is compatible
+	)
+
+# Sorry, macros meson doesn't work for us...
+meson --prefix=/usr --libdir=%{_bindir} --libexecdir=%{_libexecdir} --includedir=%{_includedir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --mandir=%{_mandir} --default-library=shared ${_opts[@]} ..
+
+ninja
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+pushd build
+export CC=clang
+export CXX=clang++
 
-install -p -D -m 0644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/mpd
+DESTDIR=%{buildroot} ninja install
 
-install -p -D -m 0644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_prefix}/lib/tmpfiles.d/mpd.conf
+install -p -D -m 0644 %{S:2} \
+    %{buildroot}/%{_sysconfdir}/logrotate.d/mpd
+
+install -p -D -m 0644 %{S:3} \
+    %{buildroot}/%{_prefix}/lib/tmpfiles.d/mpd.conf
+
 mkdir -p %{buildroot}/run
 install -d -m 0755 %{buildroot}/%{mpd_rundir}
 
-mkdir -p $RPM_BUILD_ROOT%{mpd_homedir}
-mkdir -p $RPM_BUILD_ROOT%{mpd_logdir}
-mkdir -p $RPM_BUILD_ROOT%{mpd_musicdir}
-mkdir -p $RPM_BUILD_ROOT%{mpd_playlistsdir}
-touch $RPM_BUILD_ROOT%{mpd_dbfile}
-touch $RPM_BUILD_ROOT%{mpd_logfile}
-touch $RPM_BUILD_ROOT%{mpd_statefile}
+mkdir -p %{buildroot}/%{mpd_homedir}
+mkdir -p %{buildroot}/%{mpd_logdir}
+mkdir -p %{buildroot}/%{mpd_musicdir}
+mkdir -p %{buildroot}/%{mpd_playlistsdir}
+touch %{buildroot}/%{mpd_dbfile}
+touch %{buildroot}/%{mpd_logfile}
+touch %{buildroot}/%{mpd_statefile}
 
-install -D -p -m644 doc/mpdconf.example $RPM_BUILD_ROOT%{mpd_configfile}
+popd
+#mkdir -p %{buildroot}/%{_sysconfdir} 
+install -p -D -m 0644 doc/mpdconf.example %{buildroot}/%{_sysconfdir}/mpd.conf 
+install -m 0644 doc/mpdconf.example %{buildroot}/%{_docdir}/mpd/ 
+
 sed -i -e "s|#music_directory.*$|music_directory \"%{mpd_musicdir}\"|g" \
        -e "s|#playlist_directory.*$|playlist_directory \"%{mpd_playlistsdir}\"|g" \
        -e "s|#db_file.*$|db_file \"%{mpd_dbfile}\"|g" \
        -e "s|#log_file.*$|log_file \"%{mpd_logfile}\"|g" \
        -e "s|#state_file.*$|state_file \"%{mpd_statefile}\"|g" \
        -e 's|#user.*$|user "mpd"|g' \
-       $RPM_BUILD_ROOT%{mpd_configfile}
+       %{buildroot}/%{mpd_configfile}
 
 %pre
 if [ $1 -eq 1 ]; then
@@ -173,19 +196,17 @@ fi
 
 %files
 %doc AUTHORS COPYING 
-%{_docdir}/mpd/NEWS
-%{_docdir}/mpd/README.md
-%{_docdir}/mpd/mpdconf.example
+%{_docdir}/mpd/
 %{_bindir}/%{name}
 %{_datadir}/icons/hicolor/scalable/apps/mpd.svg
 %{_mandir}/man1/mpd.1*
 %{_mandir}/man5/mpd.conf.5*
 %{_unitdir}/mpd.service
 %{_unitdir}/mpd.socket
+%{_userunitdir}/mpd.service
 %config(noreplace) %{mpd_configfile}
 %config(noreplace) %{_sysconfdir}/logrotate.d/mpd
 %{_prefix}/lib/tmpfiles.d/mpd.conf
-
 %defattr(-,%{mpd_user},%{mpd_group})
 %dir %{mpd_homedir}
 %dir %{mpd_logdir}
@@ -201,6 +222,7 @@ fi
 
 * Sat Nov 03 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21-2
 - Updated to 0.21
+- Changed to meson and clang
 
 * Wed Oct 31 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.20.23-2
 - Updated to 0.20.23
