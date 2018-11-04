@@ -61,7 +61,7 @@ BuildRequires:     libgcrypt-devel
 BuildRequires:     meson
 BuildRequires:     ninja-build
 BuildRequires:     clang
-BuildRequires:     python3-sphinx
+BuildRequires:     /usr/bin/sphinx-build
 
 # Need new version with SV8
 # BuildRequires:     libmpcdec-devel
