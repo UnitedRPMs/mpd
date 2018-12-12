@@ -24,7 +24,7 @@
 Name:           mpd
 Epoch:          1
 Version:        0.21.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
@@ -46,7 +46,7 @@ BuildRequires:     avahi-glib-devel
 BuildRequires:     boost-devel
 BuildRequires:     bzip2-devel
 BuildRequires:     faad2-devel
-BuildRequires:     ffmpeg-devel >= 4.0
+BuildRequires:     ffmpeg-devel >= 4.1
 BuildRequires:     flac-devel
 BuildRequires:     jack-audio-connection-kit-devel
 BuildRequires:     lame-devel
@@ -219,6 +219,9 @@ fi
 
 
 %changelog
+
+* Mon Dec 10 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.3-3
+- Rebuilt for ffmpeg
 
 * Fri Nov 16 2018 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.3-2
 - Updated to 0.21.3
