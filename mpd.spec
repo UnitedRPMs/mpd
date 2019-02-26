@@ -17,7 +17,7 @@
 %global  bversion            0.21
 
 
-%global commit0 4634b94c83138031903908b6111e8fd15fed6803
+%global commit0 1930d5774d2944bda1c6315c7fe7358efb70a440
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
