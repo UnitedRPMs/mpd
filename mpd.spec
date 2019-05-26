@@ -215,6 +215,11 @@ fi
 %ghost %{mpd_dbfile}
 %ghost %{mpd_logfile}
 %ghost %{mpd_statefile}
+/usr/lib/systemd/user/mpd.socket
+%{_docdir}/mpd/NEWS
+%{_docdir}/mpd/README.md
+%{_docdir}/mpd/html/
+%{_docdir}/mpd/mpdconf.example
 
 
 %changelog
