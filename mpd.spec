@@ -196,7 +196,6 @@ fi
 
 %files
 %doc AUTHORS COPYING 
-%{_docdir}/mpd/
 %{_bindir}/%{name}
 %{_datadir}/icons/hicolor/scalable/apps/mpd.svg
 %{_mandir}/man1/mpd.1*
@@ -220,7 +219,7 @@ fi
 
 %changelog
 
-* Sat May 26 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.9-7  
+* Sat May 25 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.9-7  
 - Updated to 0.21.9
 
 * Tue Apr 23 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.8-7  
