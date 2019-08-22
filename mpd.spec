@@ -122,7 +122,7 @@ pushd build
 export CC=clang
 export CXX=clang++
 
-_opts=('-Ddocumentation=true'
+_opts=('-Ddocumentation=false'
 	       '-Dchromaprint=disabled' # appears not to be used for anything
 	       '-Dsidplay=disabled' # unclear why but disabled in the past
 	       '-Dlibwrap=disabled' # twentieth century's over
@@ -164,7 +164,7 @@ touch %{buildroot}/%{mpd_statefile}
 popd
 #mkdir -p %{buildroot}/%{_sysconfdir} 
 install -p -D -m 0644 doc/mpdconf.example %{buildroot}/%{_sysconfdir}/mpd.conf 
-install -m 0644 doc/mpdconf.example %{buildroot}/%{_docdir}/mpd/ 
+#install -m 0644 doc/mpdconf.example %{buildroot}/%{_docdir}/mpd/ 
 
 sed -i -e "s|#music_directory.*$|music_directory \"%{mpd_musicdir}\"|g" \
        -e "s|#playlist_directory.*$|playlist_directory \"%{mpd_playlistsdir}\"|g" \
@@ -216,10 +216,10 @@ fi
 %ghost %{mpd_logfile}
 %ghost %{mpd_statefile}
 /usr/lib/systemd/user/mpd.socket
-%{_docdir}/mpd/NEWS
-%{_docdir}/mpd/README.md
-%{_docdir}/mpd/html/
-%{_docdir}/mpd/mpdconf.example
+#{_docdir}/mpd/NEWS
+#{_docdir}/mpd/README.md
+#{_docdir}/mpd/html/
+#{_docdir}/mpd/mpdconf.example
 
 
 %changelog
