@@ -17,13 +17,13 @@
 %global  bversion            0.21
 
 
-%global commit0 964804a4c2cdd65f2bf08b3bfde063e0c126fd4c
+%global commit0 9b95e65bd9ba9d49e1d29f42c64abede7a9b2a92
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           mpd
 Epoch:          1
-Version:        0.21.15
+Version:        0.21.16
 Release:        7%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
@@ -223,6 +223,9 @@ fi
 
 
 %changelog
+
+* Fri Oct 18 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.16-7  
+- Updated to 0.21.16
 
 * Fri Sep 27 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.15-7  
 - Updated to 0.21.15
