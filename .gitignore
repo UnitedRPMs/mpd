@@ -5,4 +5,6 @@ SPECS/*
 SRPMS/*
 .directory
 mpd-*.tar.xz.sig
-mpd-*.tar.xz
+*.tar.xz
+*.tar.gz
+*.rpm
