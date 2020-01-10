@@ -17,18 +17,18 @@
 %global  bversion            0.21
 
 
-%global commit0 5680a3a4b71661179b81e6434928d919d186c785
+%global commit0 bf41d1ad2bed5cb0b7b64b0cf4f87688da43d62c
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           mpd
 Epoch:          1
-Version:        0.21.17
+Version:        0.21.18
 Release:        7%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
 Group:          Applications/Multimedia
-URL:            http://www.musicpd.org/
+URL:            https://www.musicpd.org/
 
 Source0:        https://github.com/MusicPlayerDaemon/MPD/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 # Note that the 0.18.x branch doesn't yet work with Fedora's version of
@@ -223,6 +223,9 @@ fi
 
 
 %changelog
+
+* Thu Jan 9 2020 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.18-7  
+- Updated to 0.21.18
 
 * Fri Dec 20 2019 Unitedrpms Project <unitedrpms AT protonmail DOT com> 0.21.17-7  
 - Updated to 0.21.17

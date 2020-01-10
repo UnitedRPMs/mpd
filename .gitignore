@@ -4,7 +4,7 @@ RPMS/*
 SPECS/*
 SRPMS/*
 .directory
-mpd-*.tar.xz.sig
+*.tar.xz.sig
 *.tar.xz
 *.tar.gz
 *.rpm
