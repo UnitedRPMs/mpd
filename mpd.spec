@@ -118,9 +118,7 @@ browsing and playing your MPD music collection.
 mkdir -p build
  
 %build
-pushd build
-export CC=clang
-export CXX=clang++
+
 
 _opts=('-Ddocumentation=false'
 	       '-Dchromaprint=disabled' # appears not to be used for anything
@@ -133,16 +131,14 @@ _opts=('-Ddocumentation=false'
 	)
 
 # Sorry, macros meson doesn't work for us...
-meson --prefix=/usr --libdir=%{_bindir} --libexecdir=%{_libexecdir} --includedir=%{_includedir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --mandir=%{_mandir} --default-library=shared ${_opts[@]} ..
+%meson --prefix=/usr --libdir=%{_bindir} --libexecdir=%{_libexecdir} --includedir=%{_includedir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --mandir=%{_mandir} --default-library=shared --auto-features auto ${_opts[@]} 
 
-ninja
+%meson_build
 
 %install
-pushd build
-export CC=clang
-export CXX=clang++
 
-DESTDIR=%{buildroot} ninja install
+
+%meson_install
 
 install -p -D -m 0644 %{S:2} \
     %{buildroot}/%{_sysconfdir}/logrotate.d/mpd
@@ -161,7 +157,7 @@ touch %{buildroot}/%{mpd_dbfile}
 touch %{buildroot}/%{mpd_logfile}
 touch %{buildroot}/%{mpd_statefile}
 
-popd
+
 #mkdir -p %{buildroot}/%{_sysconfdir} 
 install -p -D -m 0644 doc/mpdconf.example %{buildroot}/%{_sysconfdir}/mpd.conf 
 #install -m 0644 doc/mpdconf.example %{buildroot}/%{_docdir}/mpd/ 
