@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>org.musicpd.mpd</id>
+  
+  <name>mpd</name>
+  <summary>The Music Player Daemon</summary>
+  
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  
+  <description>
+    <p>
+      Music Player Daemon (MPD) is a flexible, powerful, server-side application for playing music. Through plugins and libraries it can play a variety of sound files (e.g., OGG, MP3, FLAC, AAC, WAV) and can be controlled remotely via its network protocol.
+    </p>
+    <p>
+      It can be used as a desktop music player, but is also great for streaming music to a stereo system over a local network. There are many GUI and command-line applications to choose from that act as a front-end for browsing and playing your MPD music collection.
+    </p>
+  </description>
+  
+  <icon type="stock">mpd</icon>
+  
+  <categories>
+    <category>AudioVideo</category>
+    <category>Music</category>
+  </categories>
+  
+  <provides>
+    <binary>mpd</binary>
+  </provides>
+</component>

@@ -17,13 +17,13 @@
 %global  bversion            0.21
 
 
-%global commit0 c560ec8ea65f7640fbf05b6c129ed0ade393f1fd
+%global commit0 5ccfcffcc124e406233359fe8fe65b704b98b8c8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global gver .git%{shortcommit0}
 
 Name:           mpd
 Epoch:          1
-Version:        0.21.21
+Version:        0.21.22
 Release:        7%{?dist}
 Summary:        The Music Player Daemon
 License:        GPLv2+
@@ -37,6 +37,7 @@ Source0:        https://github.com/MusicPlayerDaemon/MPD/archive/%{commit0}.tar.
 # http://bugs.musicpd.org/view.php?id=3814#bugnotes
 Source2:        mpd.logrotate
 Source3:        mpd.tmpfiles.d
+Source4:	org.musicpd.mpd.metainfo.xml
 Patch0:         mpd-0.20.20-mpdconf.patch
 
 BuildRequires:     alsa-lib-devel
@@ -169,6 +170,9 @@ sed -i -e "s|#music_directory.*$|music_directory \"%{mpd_musicdir}\"|g" \
        -e "s|#state_file.*$|state_file \"%{mpd_statefile}\"|g" \
        -e 's|#user.*$|user "mpd"|g' \
        %{buildroot}/%{mpd_configfile}
+       
+# Install AppData
+  install -Dm 0644 %{S:4} %{buildroot}/%{_metainfodir}/org.musicpd.mpd.metainfo.xml       
 
 %pre
 if [ $1 -eq 1 ]; then
@@ -216,6 +220,7 @@ fi
 %{_docdir}/mpd/README.md
 #{_docdir}/mpd/html/
 #{_docdir}/mpd/mpdconf.example
+%{_metainfodir}/org.musicpd.mpd.metainfo.xml
 
 
 %changelog
