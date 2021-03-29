@@ -62,6 +62,7 @@ BuildRequires:     libgcrypt-devel
 BuildRequires:     meson
 BuildRequires:     ninja-build
 BuildRequires:     clang
+BuildRequires:     vulkan-loader
 BuildRequires:     /usr/bin/sphinx-build
 
 # Need new version with SV8
@@ -132,6 +133,7 @@ _opts=('-Ddocumentation=disabled'
 	)
 
 # Sorry, macros meson doesn't work for us...
+CFLAGS+=' -fcommon'
 %meson --prefix=/usr --libdir=%{_bindir} --libexecdir=%{_libexecdir} --includedir=%{_includedir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --mandir=%{_mandir} --default-library=shared --auto-features auto ${_opts[@]} 
 
 %meson_build
